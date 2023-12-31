@@ -1,0 +1,10 @@
+/* write your css here */
+.react-switch {
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+    
+  .move {
+    transform: translateX(100%);
+
+  }
