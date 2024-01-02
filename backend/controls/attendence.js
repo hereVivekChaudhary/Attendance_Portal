@@ -215,7 +215,7 @@ let UpdatedDateResponse= await dateModel.findOneAndUpdate({_id:element.id},{$set
 
 
 
-}catch{
+}catch(err){
     console.log("error while updating attendence ",err);
 return  res.status(400).json({
     success:false,

@@ -5,8 +5,9 @@ const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const authentication = require("./routes/authentication");
 dotenv.config();
-const PORT = 3000;
+const PORT = 4000;
 
 // Connect to the database
 database.connect();
@@ -16,13 +17,15 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin: "http://localhost:4000", 
+        origin: "http://localhost:3000", 
         credentials: true,
     })
 );
 
 // Routes
 app.use("/api/v1/attendence", attendence);
+app.use("/api/v1/authentication", authentication);
+
 
 // Default route
 app.get("/", (req, res) => {
