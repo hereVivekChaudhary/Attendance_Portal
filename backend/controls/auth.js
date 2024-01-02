@@ -17,7 +17,7 @@ exports.signup = async (req, res) => {
       }
     });
 
-    const { email, password,confirmPassword, name } = req.body;
+    const { email, password,confirmPassword, firstname,lastname } = req.body;
   
     
      if (password !== confirmPassword) {
@@ -41,8 +41,9 @@ exports.signup = async (req, res) => {
 
     // create the user
 
-    const newUser = await teacher.create({
-      name,
+    await teacher.create({
+      firstname,
+      lastname,
       email,
       password: hashedPassword,
     });
@@ -135,18 +136,21 @@ exports.signup = async (req, res) => {
       // get user old password
       const userDetails=await teacher.findById(req.user.id);
  const {oldPassword,newPassword}=req.body;
+ if(oldPassword===newPassword){
+  return res.status(400).json({ error: "Old password and new password can't be same" });
+  }
       //validating old password
-      const isPasswordCorrect = await bycrypt.compare(req.body.oldPassword, userDetails.password);
+      const isPasswordCorrect = await bycrypt.compare(oldPassword, userDetails.password);
       if (!isPasswordCorrect) {
         return res.status(400).json({ error: "Invalid Credentials" });
       }
 
       // updata password
       const hashedPassword = await bycrypt.hash(newPassword, 12);
-      const userUpdatePassword=await teacher.findByIdAndUpdate(req.user.id,{password:hashedPassword},{new:true});
+     await teacher.findByIdAndUpdate(req.user.id,{password:hashedPassword},{new:true});
       
       //send notification
-      const mailResponse=await mailSender(userDetails.email," your password has been changed",updatePassword(userDetails.email,userDetails.name));
+      const mailResponse=await mailSender(userDetails.email," your password has been changed",updatePassword(userDetails.email,userDetails.firstname,userDetails.lastname));
       console.log("Email sent successfully",mailResponse.response);
       return res.status(200).json({message:"password changed successfully"})
 

@@ -1,5 +1,3 @@
-// 
-
 const studentModel=require("../models/student");
 const teacherModel=require("../models/tteacher");
 const dateModel=require("../models/date");
@@ -91,9 +89,10 @@ exports.showAllClasses=async(req,res)=>{
 
 
     //teacher email
-    const email=req.body.email;
+    const email= req.body.email;
 
     if(!email){
+        
         return res.status(400).json({
             success:false,
         })
@@ -135,6 +134,7 @@ exports.showSingleClass=async(req,res)=>{
     console.log("err while fectching single class",err);
     return res.status.json({
         success:false,
+        message:"error while fetching single class"
     });
 
 }
@@ -162,7 +162,7 @@ try{
 let dateResponse= await dateModel.create({attendence:element.mark});
 
 
-let studentUpdate = await studentModel.findOneAndUpdate(
+ await studentModel.findOneAndUpdate(
     { _id: element.id },
     { $push: { attendence: dateResponse._id } },
     { new: true }
@@ -210,7 +210,7 @@ exports.updateAttendence=async(req,res)=>{
         // element contain data model id and mark it  present or absent
 try{
 //create dataModel
-let UpdatedDateResponse= await dateModel.findOneAndUpdate({_id:element.id},{$set:{attendence:element.mark}});
+ await dateModel.findOneAndUpdate({_id:element.id},{$set:{attendence:element.mark}});
 
 
 
