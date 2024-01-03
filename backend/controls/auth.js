@@ -184,15 +184,18 @@ console.log("user created");
         const {email}=req.body
         //check if ueser exists
         const user=await teacher.findOne({email});
+      
         if(!user){
           return res.status(400).json({ error: "Email doesn't exists" });
         }
+        
         //generate token
-        const token=crypto.randomBytes(32).toString('hex');
+        const token=crypto.randomBytes(20).toString('hex');
         const updateUserDetails=await teacher.findOneAndUpdate({email},{token:token,expriesOfUrl:Date.now()+3600000},{new:true});
         console.log(updateUserDetails);
 
         const url=`http://localhost:3000/resetPassword/${token}`;
+        console.log(url);
 
         //send mail
         await mailSender(email,"Reset Password",`Click on the link to reset your password ${url}`);
@@ -205,19 +208,22 @@ console.log("user created");
 
     //reset password
     exports.resetPassword=async(req,res)=>{
+      console.log(req.body);
        try{
         Object.entries(req.body).forEach(([key, value]) => {
           if (!value) {
             return res.status(400).json({ error: `${key} is required` });
           }
         })
+        console.log("user-1");
 const {token,password,confirmPassword}=req.body;
 if(password!==confirmPassword){
   return res.status(400).json({ error: "Password doesn't match" });
 }
-
+console.log("user-2");
 // check if token exists
 const user=await teacher.findOne({token:token});
+console.log(user);
 if(!user){
   return res.status(400).json({ error: "Invalid token" });
        }
@@ -225,10 +231,12 @@ if(!user){
         if(user.expriesOfUrl<Date.now()){
           return res.status(400).json({ error: "Token expired" });
         }
+        console.log("user-3");
       //hash password
       const hashedPassword=await bycrypt.hash(password,12);
 //update password
 await teacher.findOneAndUpdate({token:token},{password:hashedPassword},{new:true});
+console.log("user-4");
 return res.status(200).json({message:"password reset successfully"});
 
 

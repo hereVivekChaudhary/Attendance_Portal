@@ -39,14 +39,14 @@ dispatch(login(data,navigate));
 
 
   return (
-    <div className="w-[100vw] h-[100vh] flex justify-center items-center">
+    <div className="h-[calc(100vh-48px)] flex justify-center items-center">
       <div className="flex rounded-xl bg-green-500 p-3 h-[20rem]">
         {/* login */}
-        <div className="w-[50%] bg-pink-500 rounded-l-2xl text-white">
+        <div className="w-[50%] bg-pink-500 rounded-l-2xl text-white flex  justify-center items-center ">
           {formtype === "login" && (
-            <div>
+            <div >
               <h1>Login</h1>
-              <form onSubmit={handleSubmit(onSubmitLogin)} className="w-fit text-black">
+              <form onSubmit={handleSubmit(onSubmitLogin)} className="w-fit text-black flex flex-col gap-2 ">
                 <div className="flex">
                   <img
                     src="https://img.icons8.com/ios/50/000000/google-logo.png"
@@ -87,9 +87,9 @@ dispatch(login(data,navigate));
                   <p>Don't have an account? Sign up</p>
                 </Link>
                 <p>
-                  <Link to="/user/forgotpassword">Forgot Password?</Link>
+                  <Link to="/forogotPassword">Forgot Password?</Link>
                 </p>
-                <button type="submit">Login</button>
+                <button type="submit"  className=" bg-green-600 w-fit rounded p-1 text-xl text-white        ">Login</button>
               </form>
             </div>
           )}
@@ -104,10 +104,10 @@ dispatch(login(data,navigate));
           )}
         </div>
         {/* signup */}
-        <div className="w-[50%] bg-red-600 rounded-r-2xl text-white">
+        <div className="w-[50%] bg-red-600 rounded-r-2xl text-white flex justify-center items-center">
           {!(formtype === "login") && (
             <div>
-              <h1>Sign up</h1>
+              <h1 className=" text-center ">Sign up</h1>
               <form onSubmit={handleSubmit(onSubmitSignUp)} className="flex flex-col gap-1 text-black">
                 <div className="flex gap-1">
                   <input
@@ -169,7 +169,7 @@ dispatch(login(data,navigate));
                 <Link to="/user/login">
                   <p>Already have an account? Login</p>
                 </Link>
-                <button type="submit">Sign up</button>
+                <button type="submit" className=" bg-green-600 w-fit rounded p-1 text-xl text-white        ">Sign up</button>
               </form>
             </div>
           )}

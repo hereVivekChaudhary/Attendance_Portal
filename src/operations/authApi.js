@@ -1,6 +1,6 @@
 import  {authendpoints} from './apis';
 import {userendpoints} from './apis';
-import { toast } from "react-hot-toast"
+import { toast } from "react-hot-toast";
 import { setLoading, setToken, setUser } from '../reduxslice/authSlice';
 import { apiConnector } from './apiConnector';
 
@@ -67,11 +67,10 @@ export function login(data,navigate){
             dispatch(setLoading(true));
             const response=await apiConnector("POST",LOGIN,data);
             if(response.status===200){
-             
                 dispatch(setToken(response.data.token));
-                dispatch(setUser(response.data.user));
+                dispatch(setUser(response.data.result));
                 localStorage.setItem("token", JSON.stringify(response.data.token))
-                localStorage.setItem("user", JSON.stringify(response.data.user))
+                localStorage.setItem("user", JSON.stringify(response.data.result))
                 toast.success("Login successful");
                 navigate('/');
             }
@@ -89,16 +88,25 @@ export function login(data,navigate){
 
 }
 
-export function Logout(navigate){
-    return (dispatch)=>{
-dispatch(setToken(null));
-dispatch(setUser(null));
-localStorage.removeItem("token");
-localStorage.removeItem("user");
-toast.success("Logout successful");
-navigate('/user/login');
-    }
-}
+export function Logout(navigate) {
+  
+    return async (dispatch) => {
+        
+      
+  
+       dispatch(setToken(null));
+       dispatch(setUser(null));
+  
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+  
+    
+      navigate('/user/login');
+      toast.success("Logout successful");
+    };
+  }
+  
+  
 
 // generate password reset token
  export function forgotPassword(data){
@@ -121,9 +129,11 @@ navigate('/user/login');
 
  // reset password
 
- export function resetPassword(data)
+ export function resetPassword(data,navigate)
  {
+    
     return async(dispatch)=>{
+        console.log(data);
         dispatch(setLoading(true));
         try{
             const response=await apiConnector("POST",RESET_PASSWORD,data);
@@ -133,7 +143,7 @@ navigate('/user/login');
             else{
                 toast.error("Something went wrong");
             }
-
+            navigate('/user/login');
         }catch(error){
             console.log(error);
         }   

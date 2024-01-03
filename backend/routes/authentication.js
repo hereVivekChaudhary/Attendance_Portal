@@ -11,6 +11,7 @@ router.post("/sendOtp",sendOtp);
 
 //change password
 router.post("/changePassword",authorization,changePassword);
+
 //forgot password
 router.post("/forgotPassword",generateUrl);
 router.post("/resetPassword",resetPassword);
