@@ -1,16 +1,16 @@
 const bycrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const teacher = require("../models/teacher");
+const teacher = require("../models/tteacher");
 const otp = require("../models/otp");
 const optGenerator=require("otp-generator");
 const mailSender=require("../mail/mailSender");
-const updatePassword=require("../mail/updatePassword");
+const updatePassword=require("../mail/passwordUpdate");
 const crypto=require("crypto");
 require("dotenv").config();
 //signup
 exports.signup = async (req, res) => {
     try{
-        
+     
         Object.entries(req.body).forEach(([key, value]) => {
       if (!value) {
         return res.status(400).json({ error: `${key} is required` });
@@ -23,24 +23,31 @@ exports.signup = async (req, res) => {
      if (password !== confirmPassword) {
       return res.status(400).json({ error: "Password doesn't match" });
     }
+   
     const user = await teacher.findOne({ email });
+
     if (user) {
       return res.status(400).json({ error: "Email already exists" });
     }
     //find otp
+   
     const otpData = await otp.findOne({ email }).sort({ createdAt: -1 }).limit(1);
+    console.log(req.body.otp);
     if (!otpData) {
+
       return res.status(400).json({ error: "OTP not found" });
     }
+    
     else if(otpData.otp!==req.body.otp){
       return res.status(400).json({ error: "OTP not matched" });
 
     }
+   
     // Hash the password
     const hashedPassword = await bycrypt.hash(password, 12);
 
     // create the user
-
+   
     await teacher.create({
       firstname,
       lastname,
@@ -48,7 +55,8 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
     });
 
-    return res.status(201).json({ message: "User created successfully" });
+console.log("user created");
+    return res.status(200).json({ message: "User created successfully" });
     }
     catch (err) {   
     return res.status(500).json({ error: err.message,message:"error in signup" });
@@ -67,30 +75,36 @@ exports.signup = async (req, res) => {
               //find user
               const { email, password } = req.body;
                 const user = await teacher.findOne({ email });
+           
                 if (!user) {
                   return res.status(400).json({ error: "Invalid Credentials" });
                 }
                 //check password
                 const isPasswordCorrect = await bycrypt.compare(password, user.password);
+           
                 if (isPasswordCorrect) {
                     const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: '30m' });
-
+                
                    user.token=token;
                    user.password=undefined;
+              
                    //create cookie
                    const cookieOptions={
                     //in minutes
-                    expires:new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES*60*1000),
+                    expires:new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES*60*60*1000),
                     httpOnly:true
                 }
-                res.cookie('jwt',token,cookieOptions);
-                    return res.status(200).json({result:user,token});
+          
+                
+               
+                    return res.cookie('jwt',token,cookieOptions).status(200).json({result:user,token:token});
+                  
             }
                 else
                 {
                     return res.status(400).json({ error: "Invalid Credentials" });
                 }
-                
+                 
         }
         catch(err){
             return res.status(500).json({ error: err.message,message:"error in login" });
@@ -104,22 +118,25 @@ exports.signup = async (req, res) => {
         const { email } = req.body;
         const user = await teacher.findOne({ email });
         if (user) {
-          return res.status(400).json({ error: "Email already exists" });
+          return res.status(400).json({ error: "user already exists" });
         }
         //generate otp
-        let otp=optGenerator.generate(6,{upperCase:false,specialChars:false});
+        let gotp=optGenerator.generate(6,{upperCase:false,specialChars:false});
         //check if otp already exists
-        let otpData = await otp.findOne({ otp:otp });
+        let otpData = await otp.findOne({ otp:gotp });
+    
         while(otpData){
-          otp=optGenerator.generate(6,{upperCase:false,specialChars:false});
-          otpData = await otp.findOne({ otp:otp });
+          gotp=optGenerator.generate(6,{upperCase:false,specialChars:false});
+          otpData = await otp.findOne({ otp:gotp });
+          console.log("infitie otp loop");
         }
         //create otp
         await otp.create({
           email,
-          otp,
+          otp:gotp,
         });
-        
+        console.log(gotp);
+        res.status(200).json({message:"otp sent successfully"});
 
         }catch(err){
             return res.status(500).json({ error: err.message,message:"error in send otp" });

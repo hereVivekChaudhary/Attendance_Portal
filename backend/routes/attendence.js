@@ -8,7 +8,7 @@ const {addStudent,updateAttendence,showSingleClass,showAllClasses,markAttendence
 router.post("/createClass",addStudent);
 
 // show all the class
-router.get("/showAllClass",showAllClasses)
+router.get("/showAllClasses",showAllClasses)
 
 
 // show attendence table

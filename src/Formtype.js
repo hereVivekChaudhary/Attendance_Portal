@@ -1,89 +1,191 @@
-import React ,{useState} from "react";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import download from "./assets/download.jpeg";
+import { useDispatch } from "react-redux";
+import {setSignupData} from "./reduxslice/authSlice";
+import { login } from "./operations/authApi";
 
-const FormType=()=>{
-    let {formtype}=useParams();
-    console.log(formtype);
-    console.log(formtype);
-    const {register,handleSubmit}=useForm();
-
-    return(
-        <div className="  w-[100vw] h-[100vh] flex justify-center items-center">
-            <div  className=" flex rounded-xl  bg-green-500 p-3  h-[20rem]">
+import toast from "react-hot-toast";
+import { sendOtp } from "./operations/authApi";
 
 
-{/* login */}
-<div className=" w-[50%]  bg-pink-500  rounded-l-2xl  ">
-   {formtype==="login" && <div className=" text-white p-4">
-        <h1>Login</h1>
-    <form className=" w-fit">
-       <div className=" flex">
-        {/* another way of login */}
-        <img src="https://img.icons8.com/ios/50/000000/google-logo.png" alt='goggle'/>
-        <img src="https://img.icons8.com/ios/50/000000/github" alt='github'/>
-       </div>
+const FormType = () => {
+  let { formtype } = useParams();
+    const dispatch = useDispatch();
+    const navigate=useNavigate();
+  console.log(formtype);
+
+  const { register, handleSubmit, formState: { errors } ,reset} = useForm();
+
+  const onSubmitLogin = (data) => {
+    console.log("Login data:", data);
+
+dispatch(login(data,navigate));
+    reset()
+  };
+
+  const onSubmitSignUp = (data) => {
+    console.log("Sign-up-data:", data);
+    if(data.password!==data.confirmPassword ){
+        toast.error("Password  match");
+        return;
+    }
+    
+    dispatch(setSignupData(data));
+    dispatch(sendOtp(data.email,navigate));
+    reset();
+  };
+
+
+  return (
+    <div className="w-[100vw] h-[100vh] flex justify-center items-center">
+      <div className="flex rounded-xl bg-green-500 p-3 h-[20rem]">
+        {/* login */}
+        <div className="w-[50%] bg-pink-500 rounded-l-2xl text-white">
+          {formtype === "login" && (
             <div>
-            <input type="email" name="username" id="username" placeholder="    Email" className="border-2 border-black"/>
+              <h1>Login</h1>
+              <form onSubmit={handleSubmit(onSubmitLogin)} className="w-fit text-black">
+                <div className="flex">
+                  <img
+                    src="https://img.icons8.com/ios/50/000000/google-logo.png"
+                    alt="goggle"
+                  />
+                  <img
+                    src="https://img.icons8.com/ios/50/000000/github"
+                    alt="github"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email1"
+                    placeholder="Email"
+                    className={`border-2 border-black ${errors.email ? 'border-red-500' : ''}`}
+                    {...register('email', { required: 'Email is required' })}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email.message}</p>
+                  )}
+                </div>
+                <div>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password1"
+                    placeholder="Password"
+                    className={`border-2 border-black ${errors.password ? 'border-red-500' : ''}`}
+                    {...register('password', { required: 'Password is required' })}
+                  />
+                  {errors.password && (
+                    <p className="text-red-500">{errors.password.message}</p>
+                  )}
+                </div>
+                <Link to="/user/signup">
+                  <p>Don't have an account? Sign up</p>
+                </Link>
+                <p>
+                  <Link to="/user/forgotpassword">Forgot Password?</Link>
+                </p>
+                <button type="submit">Login</button>
+              </form>
             </div>
+          )}
+          {!(formtype === "login") && (
             <div>
-            <input type="password" name="password" id="password" placeholder="    Password" className="border-2 border-black"/>
-         </div>
-         <Link to="/user/signup">  <p>Don't have an account? Sign up</p></Link>
-         <p>
-          <Link to="/user/forgotpassword">Forgot Password?</Link>
-          </p>
-        <button type="submit">Login</button>
-    </form>
-    </div>
-}
-{
-    !(formtype==="login") && <div className=" text-white  ">
-     <img src={download} alt="attendence" className=" object-cover w-full h-[18.5rem]" />
-
-        </div>
-}
-</div>
-{/* signup */}
-<div className=" w-[50%]  bg-red-600 rounded-r-2xl  " >
-
-{!(formtype==='login') && <div className=" text-white p-4  flex flex-col  items-center  ">
-        <h1>Sign up</h1>
-    <form className=" flex flex-col gap-1">
-       <div className=" flex">
-        {/* another way of login */}
-        <img src="https://img.icons8.com/ios/50/000000/google-logo.png" alt='goggle'/>
-        <img src="https://img.icons8.com/ios/50/000000/github" alt='github'/>
-       </div>
-       <div className="flex gap-1 ">
-  <input type="text" name="Firstname" id="Firstname" placeholder="   First Name" className=" border-2 border-black w-[50%]" />
-  <input type="text" name="Lastname" id="Lastname" placeholder="   Last Name" className=" border-2 border-black w-[50%]" />
-</div>
-
-      
-            <input type="email" name="username" id="username" placeholder="    Email" className="border-2 border-black  "/>
-
-          
-            <input type="password" name="password" id="password" placeholder="    Password" className="border-2 border-black "/>
-      
-         <p>
-         
-          </p>
-          <Link to="/user/login">  <p>Already have an account? Login</p></Link>
-        <button type="submit">Sign up</button>
-    </form>
-    </div>
-}
-{
-    formtype==='login' && <div className=" text-white ">
-     <img src={download} alt="attendence" className=" object-cover w-full h-[18.5rem]" />
-
-        </div>
-}
-</div>
+              <img
+                src={download}
+                alt="attendence"
+                className="object-cover w-full h-[18.5rem]"
+              />
             </div>
+          )}
         </div>
-    )
-}
+        {/* signup */}
+        <div className="w-[50%] bg-red-600 rounded-r-2xl text-white">
+          {!(formtype === "login") && (
+            <div>
+              <h1>Sign up</h1>
+              <form onSubmit={handleSubmit(onSubmitSignUp)} className="flex flex-col gap-1 text-black">
+                <div className="flex gap-1">
+                  <input
+                    type="text"
+                    name="firstname"
+                    id="firstname"
+                    placeholder="First Name"
+                    className={`border-2 border-black w-[50%] ${errors.firstname ? 'border-red-500' : ''}`}
+                    {...register('firstname', { required: 'First Name is required' })}
+                  />
+                  {errors.firstname && (
+                    <p className="text-red-500">{errors.firstname.message}</p>
+                  )}
+                  <input
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    placeholder="Last Name"
+                    className={`border-2 border-black w-[50%] ${errors.lastname ? 'border-red-500' : ''}`}
+                    {...register('lastname', { required: 'Last Name is required' })}
+                  />
+                  {errors.lastname && (
+                    <p className="text-red-500">{errors.lastname.message}</p>
+                  )}
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  className={`border-2 border-black ${errors.email ? 'border-red-500' : ''}`}
+                  {...register('email', { required: 'Email is required' })}
+                />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  className={`border-2 border-black ${errors.password ? 'border-red-500' : ''}`}
+                  {...register('password', { required: 'Password is required' })}
+                />
+                {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
+                     <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="  Confirm Password"
+                  className={`border-2 border-black ${errors.confirmPassword ? 'border-red-500' : ''}`}
+                  {...register('confirmPassword', { required: 'Password is required' })}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500">{errors.confirmPassword.message}</p>
+                )}
+                <Link to="/user/login">
+                  <p>Already have an account? Login</p>
+                </Link>
+                <button type="submit">Sign up</button>
+              </form>
+            </div>
+          )}
+          {formtype === "login" && (
+            <div>
+              <img
+                src={download}
+                alt="attendence"
+                className="object-cover w-full h-[18.5rem]"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default FormType;

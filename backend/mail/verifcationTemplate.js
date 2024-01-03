@@ -3,30 +3,30 @@ const otpTemplate = (otp) => {
     <!DOCTYPE html>
     <html>
     <head>
-    <title>verification Email</title>
-    <style>
-        body{
-        background-color: #f1f1f1;
-    }
-    .container{
-        width: 60%;
-        margin: auto;
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-    }   
+        <title>Verification Email</title>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                background-color: #f1f1f1;
+            }
+            .container {
+                width: 60%;
+                margin: auto;
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+            }
         </style>
-            
-        </head>
-            
-            <body>  
-                <div class="container">
-                    <h1>OTP for verification</h1>
-                    <p>Use this OTP to verify your email address</p>
-                    <h2>${otp}</h2>
-                </div>
-                </body>
-                </html>
-                `;
+    </head>
+    <body>  
+        <div class="container">
+            <h1>OTP for Verification</h1>
+            <p>Use this OTP to verify your email address</p>
+            <h2>${otp}</h2>
+        </div>
+    </body>
+    </html>
+    `;
 }
-exports.default = otpTemplate;
+
+module.exports = otpTemplate;

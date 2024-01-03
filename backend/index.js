@@ -23,7 +23,7 @@ app.use(
 );
 
 // Routes
-app.use("/api/v1/attendence", attendence);
+app.use("/api/v1/attendance", attendence);
 app.use("/api/v1/authentication", authentication);
 
 
