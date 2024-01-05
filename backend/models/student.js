@@ -4,14 +4,19 @@ const student=new mongoose.Schema({
         type:String,
         required:true,
     },
-    moblieNo:{
+    phone:{
         type:String,
+        required:true,  
     },
     name:{
 type:String,
 required:true,
     },
     rollNo:{
+        type:String,
+        required:true,
+    },
+    address:{
         type:String,
         required:true,
     },

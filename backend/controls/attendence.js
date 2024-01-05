@@ -1,9 +1,83 @@
 const studentModel=require("../models/student");
 const teacherModel=require("../models/tteacher");
-const dateModel=require("../models/date");
+const dateModel=require("../models/ddate");
 const classModel=require("../models/cclass");
 
+
+//create class
+exports.createClass=async(req,res)=>{
+//validate
+console.log("req.body",req.body);
+ const isEmpty=Object.values(req.body).some(element=>!element);
+console.log("isEmpty",isEmpty);
+ if(isEmpty){
+        return res.status(400).json({
+            success:false,
+            message:"all fields are required"
+        });
+    }
+    console.log("create 1");
+   try{
+  // Create new class entry
+  const newClass = new classModel({
+    startTime: req.body.startTime,
+    endTime: req.body.endTime,
+    standard: req.body.standard,
+    subject: req.body.subject
+});
+console.log("create 2");
+
+// Save the new class entry to the database
+const classResponse = await newClass.save();
+console.log("create 3");
+if(!classResponse){
+    return res.status(400).json({
+        success:false,
+        message:"error while creating class"
+    })
+    }
+
+    console.log("create 4");
+
+        // Update teacher's classes
+        const teacherResponse= await teacherModel.findOneAndUpdate(
+            { email: req.body.email },
+            { $push: { classes: classResponse._id } },
+            { new: true }
+        ).populate({
+            path: "classes",populate:{
+                path:"students"
+            }
+        }).exec();
+if(!teacherResponse){
+    return res.status(400).json({
+        success:false,
+        message:"error while creating class"
+    })
+    }
+    console.log("create 5");
+    return res.status(200).json({
+        success:true,
+        message:"class created successfully",
+        data:classResponse
+    })
+}  
+    catch(err){
+        console.log("err while creating class",err);
+        return res.status(500).json({
+            success:false,
+            message:"error while creating class"
+
+        })
+    }
+    
+}
+
+// add student to the class
+
 exports.addStudent = async (req, res) => {
+    console.log("req.body  ",req.body);
+
     try {
         // Validate request body
         const bodyValues = Object.values(req.body);
@@ -16,16 +90,7 @@ exports.addStudent = async (req, res) => {
             });
         }
 
-        // Create new class entry
-        const newClass = new classModel({
-            startTime: req.body.startTime,
-            endTime: req.body.endTime,
-            standard: req.body.standard,
-            subject: req.body.subject
-        });
-
-        // Save the new class entry to the database
-        const classResponse = await newClass.save();
+      
 
         // Create students
         const studentIds = [];
@@ -43,6 +108,8 @@ exports.addStudent = async (req, res) => {
                 moblieNo: student.mobileNo, // Corrected property name
                 name: student.name,
                 rollNo: student.rollNo,
+                address: student.address,
+                phone:student.phone,
                 // attendence:[],
             });
            
@@ -52,26 +119,16 @@ exports.addStudent = async (req, res) => {
         // Add students to the class
 
         await classModel.findByIdAndUpdate(
-            classResponse._id,
+            req.body.id,
             { $push: { students: { $each: studentIds } } },
             { new: true }
         ).populate("students").exec();
 
-        // Update teacher's classes
-       const teacherResponse= await teacherModel.findOneAndUpdate(
-            { email: req.body.email },
-            { $push: { classes: classResponse._id } },
-            { new: true }
-        ).populate({
-            path: "classes",populate:{
-                path:"students"
-            }
-        }).exec();
+
 
         return res.status(200).json({
             success: true,
             message: "Students added successfully",
-            data:teacherResponse
         });
     } catch (error) {
         console.error("Error adding students:", error);
@@ -90,7 +147,8 @@ exports.showAllClasses=async(req,res)=>{
 
     //teacher email
     const email= req.body.email;
-
+    console.log("body",req.body);
+console.log("email",email);
     if(!email){
         
         return res.status(400).json({
@@ -101,7 +159,6 @@ exports.showAllClasses=async(req,res)=>{
         
         const response= await teacherModel.findOne({email:email}).populate("classes").exec();
         console.log("response",response);
-        console.log(response.startTime);
         console.log("********");
         return res.status(200).json({
             success:true,
@@ -116,19 +173,15 @@ exports.showAllClasses=async(req,res)=>{
 
 // show details of single class
 exports.showSingleClass=async(req,res)=>{
-
-    // // teacher email
-    // const email=req.email;
-
-    // class id 
     const classId=req.body.id;
     try{
    const respones = await classModel.findOne({_id:classId}).populate({
-    path:"students.attendence"
+    path:"students"
    }).exec();
+   console.log("respones",respones);
    return res.status(200).json({
     success:true,
-    data:respones
+    data:respones.students,
    })
 }catch(err){
     console.log("err while fectching single class",err);
@@ -143,50 +196,50 @@ exports.showSingleClass=async(req,res)=>{
 }
 
 exports.markAttendence=async(req,res)=>{
-    // attendence array
-    const attendence=req.body.attendence;
-    if(!attendence.length)
-    {
+    //attendence array
+    try{
+
+        const attendence=req.body.attendence;
+        console.log("attendence**************",attendence);
+        if(!attendence.length){
+            return res.status(400).json({
+                success:false,
+                message:"all fields are required"
+            });
+        }
+
+        const find= await dateModel.findOne({Date:attendence[0].Date,classId:attendence[0].classId});
+        console.log("find",find);
+        if(find){
         return res.status(400).json({
-            success:false,  
-            message:"all field are required"
+            success:true,
+            message:"attendence already  marked",
         });
     }
 
+attendence.forEach(async(element)=>{
+    // element contain student id and mark it  present or absent
 
-    
-    attendence.forEach(async(element)=>{
-        // element contain student id and mark it  present or absent
-try{
-//create dataModel
-let dateResponse= await dateModel.create({attendence:element.mark});
+    //create dataModel
+    let dateResponse= await dateModel.create({attendence:element.mark,Date:element.Date,classId:element.classId,time:element.time});
+    console.log("dateResponse",dateResponse);
 
 
- await studentModel.findOneAndUpdate(
-    { _id: element.id },
-    { $push: { attendence: dateResponse._id } },
-    { new: true }
-).populate({
-    path: " attendence",populate:{
-        path:"attendence"
-    }
+    let updateinfo= await studentModel.findOneAndUpdate(
+        { _id: element.id },
+        { $push: { attendence: dateResponse._id } },
+        { new: true }
+    ).populate("attendence").exec();
+
+})
+return res.status(200).json({
+    success:true,
+    message:"attendence marked successfully",   
 });
 
-
-}catch(err){
-    console.log("error while taking attendence ",err);
-return  res.status(400).json({
-    success:false,
-    message:"error while taking attendence",
-})
-}
-    })
-
-    return res.status(200).json({
-        success:true,
-        message:"attendence marked successfully",
-    });
-
+    }catch(err){
+        console.log("error while taking attendence ",err);
+    }
 }
 
 

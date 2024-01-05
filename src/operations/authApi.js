@@ -1,11 +1,9 @@
 import  {authendpoints} from './apis';
-import {userendpoints} from './apis';
 import { toast } from "react-hot-toast";
 import { setLoading, setToken, setUser } from '../reduxslice/authSlice';
 import { apiConnector } from './apiConnector';
 
 const {SEND_OTP,SIGNUP,LOGIN,CHANGE_PASSWORD,FORGOT_PASSWORD,RESET_PASSWORD }=authendpoints;
-const {CREATE_CLASS,SHOW_ALL_CLASSES,SHOW_SINGLE_CLASS,MARK_ATTENDENCE,UPDATE_ATTENDENCE}=userendpoints;
 
 export function sendOtp(email,navigate){
     return async(dispatch)=>{   

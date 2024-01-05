@@ -1,35 +1,48 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import {useParams,useNavigate} from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { addStudent } from "./operations/attendenceApi";
+
+
 
 const AddStudent = () => {
   const { register, handleSubmit, reset,formState:{errors} } = useForm();
+  const {id}=useParams();
   const [students, setStudents] = useState([]);
+  const dispatch = useDispatch();
+  const navigate=useNavigate();
   const  boxShadow ={
     boxShadow:  '10px 10px 100px #d36060,-10px -10px 80px #ff8282',
   }
 
-  const onSubmit = (data) => {
-    // Creating a student object
-    const student = { ...data };
- 
-
-    // Updating the list of students
-    setStudents((prevStudents) => [...prevStudents, student]);
+  const onAdd = (data) => {
+  
+   
+    setStudents((prevStudents) => [...prevStudents, data]);
 
     // Logging the student details to the console
-    console.log(student);
+    console.log(students);
 
     // Clearing the form after submission
     reset();
   };
 
+  //Add stuent to the class
+  const handleClick=()=>{
+
+    const data={students:students,id:id};
+console.log(data);
+dispatch(addStudent(data,navigate));
+  }
+
   return (
-    <div className="w-full h-full flex flex-col gap-5">
+    <div className=" flex flex-col gap-5">
       <h1 className="text-2xl text-white text-center">Add Student</h1>
       {/* Form */}
       <div className="bg-red-400 mx-auto p-4 ml-3 mr-3  rounded" style={boxShadow}>
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onAdd)}>
           <div className="flex gap-1 flex-wrap">
             <input
               type="text"
@@ -79,7 +92,7 @@ const AddStudent = () => {
       </div>
 
       {/* List of Students */}
-      <div className="bg-red-400 h-[300px] text-center rounded ml-3 mr-3 overflow-x-auto " style={boxShadow}>
+      <div className="bg-red-400  text-center rounded ml-3 mr-3 overflow-x-auto " style={boxShadow}>
   <h2 className="text-white text-2xl">List of Students</h2>
   <table className="min-w-full bg-white border border-gray-300">
     <thead>
@@ -103,6 +116,9 @@ const AddStudent = () => {
       ))}
     </tbody>
   </table>
+  <button className="bg-green-900 text-white rounded-md p-1" onClick={handleClick}>
+              Submit
+            </button>
 </div>
 
     </div>

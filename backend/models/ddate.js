@@ -1,8 +1,16 @@
 const mongoose=require("mongoose");
 const date=new mongoose.Schema({
-    date:{
-        type:Date,
-        default:Date.now(),
+    Date:{
+       type:String, 
+       required:true,
+    },
+    time:{
+        type:String,
+        required:true,
+    },
+    classId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"classes",
     },
       attendence:{
         type:String,
@@ -11,6 +19,5 @@ const date=new mongoose.Schema({
     },
 },{timestamps:true});
 module.exports=mongoose.model("date",date);
-
 
 

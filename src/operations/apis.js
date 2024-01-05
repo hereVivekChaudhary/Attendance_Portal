@@ -10,9 +10,10 @@ export const authendpoints={
 }
 
 export const userendpoints={
-    CREATE_CLASS:BASE_URL+'attendance/createClass',
-    SHOW_ALL_CLASSES:BASE_URL+'attendance/showAllClasses',
-    SHOW_SINGLE_CLASS:BASE_URL+'attendance/studentTable',
-    MARK_ATTENDENCE:BASE_URL+'attendance/submitAttendence',
-    UPDATE_ATTENDENCE:BASE_URL+'attendance/updateAttendence',
+    CREATE_CLASS:BASE_URL+'/attendance/createClass',
+    ADD_STUDENT:BASE_URL+'/attendance/addStudent',
+    SHOW_ALL_CLASSES:BASE_URL+'/attendance/showAllClasses',
+    SHOW_SINGLE_CLASS:BASE_URL+'/attendance/studentTable',
+    MARK_ATTENDENCE:BASE_URL+'/attendance/submitAttendence',
+    UPDATE_ATTENDENCE:BASE_URL+'/attendance/updateAttendence',
 }
