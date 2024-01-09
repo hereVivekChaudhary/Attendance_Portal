@@ -7,7 +7,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const authentication = require("./routes/authentication");
 dotenv.config();
-const PORT = 4000;
+const PORT = process.env.PORT
 
 // Connect to the database
 database.connect();
