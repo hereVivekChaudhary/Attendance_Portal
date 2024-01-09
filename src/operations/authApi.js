@@ -15,7 +15,7 @@ export function sendOtp(email,navigate){
        
             if(response.status===200){
                 toast.success("OTP sent successfully");
-                navigate('/verifiy-otp');
+                navigate('/verify-otp');
             }
             else{
                 toast.error("Something went wrong");

@@ -28,7 +28,7 @@ function App() {
         <Route path="/addclass" element={<Privateroute><CreateClass /></Privateroute>} />
         <Route path="/AddStudent/:id" element={<Privateroute><AddStudent /></Privateroute>} />
         <Route path="/menu/:id" element={<Privateroute><Menu/></Privateroute>} />
-        <Route path="user/:formtype" element={<Openroute><FormType /></Openroute>} />
+        <Route path="/user/:formtype" element={<Openroute><FormType /></Openroute>} />
         <Route path="/verify-otp" element={<Openroute><VerifyEmail /></Openroute>} />
         <Route path="/forogotPassword" element={<Openroute><ForgotPassword /></Openroute>} />
         <Route path="/resetPassword/:token" element={<Openroute>< ChangePassword/></Openroute>} />
