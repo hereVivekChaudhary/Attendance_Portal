@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 
 import {useParams} from "react-router-dom";
@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 
 const EditDetailsPage=()=>{
    const {id}=useParams();
-   // const [student,setStudent]=useState([]);
+   
    const dispatch=useDispatch();
 const {register,handleSubmit,setValue}=useForm();
 

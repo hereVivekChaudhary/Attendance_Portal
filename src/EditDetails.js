@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { showSingleClass} from './operations/attendenceApi';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import "./App.css";
 import { useDispatch } from "react-redux";
 

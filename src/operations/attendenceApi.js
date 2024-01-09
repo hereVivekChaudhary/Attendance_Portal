@@ -1,4 +1,3 @@
-import React from "react";
 import {userendpoints} from './apis';
 import { toast } from "react-hot-toast";
 import { apiConnector } from "./apiConnector";
