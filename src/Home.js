@@ -9,7 +9,8 @@ import { addStudent } from "./operations/attendenceApi";
 const Home = () => {
   const dispatch = useDispatch();
   const {user}= useSelector(state=>state.auth);
-  const email = JSON.parse(user).email;
+  // console.log(typeof user);
+  const email = user.email;
   
   
   const [classes, setClasses] = useState([]);
