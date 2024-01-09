@@ -12,6 +12,10 @@ import Openroute from "./Routes/Openroute";
 import Privateroute from "./Routes/Privateroute";
 import Menu from "./Menu";
 import Sheet from "./Sheet";
+import UpdateAttendence from "./UpdateAttendence";
+import EditDetails from "./EditDetails";
+import Attendance from "./Attendence";
+import EditDetailsPage from "./EditDetailsPage";
 
 function App() {
   return (
@@ -29,7 +33,10 @@ function App() {
         <Route path="/forogotPassword" element={<Openroute><ForgotPassword /></Openroute>} />
         <Route path="/resetPassword/:token" element={<Openroute>< ChangePassword/></Openroute>} />
         <Route path="/markAttendence/:id" element={<Privateroute><Sheet/></Privateroute>} />
-        <Route path="/updateAttendence/sheet/:id" element={<Privateroute><Sheet/></Privateroute>} />
+        <Route path="/updateAttendence/:id" element={<Privateroute><UpdateAttendence/></Privateroute>} />
+        <Route path="/editDetails/:id" element={<Privateroute><EditDetails/></Privateroute>} />
+        <Route path="/editDetailsPage/:id" element={<Privateroute><EditDetailsPage/></Privateroute>} />
+        <Route path="/Attendence/:id" element={<Privateroute><Attendance/></Privateroute>} />
         <Route path="*" element={<h1 className=" bg-white">404 not found</h1>} />
       </Routes>
     </div>

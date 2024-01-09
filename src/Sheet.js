@@ -14,7 +14,7 @@ const Sheet = () => {
   const navigate = useNavigate();
 
    // **********************************
-   const date = new Date(); // You can replace this with your specific date
+   const date = new Date(); 
 
    const optionsD = {
      year: 'numeric',
@@ -75,6 +75,7 @@ const Sheet = () => {
           <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr>
+                <th className="border border-gray-300 px-4 py-2">S.R No</th>
                 <th className="border border-gray-300 px-4 py-2">Name</th>
                 <th className="border border-gray-300 px-4 py-2">Roll No</th>
                 <th className="border border-gray-300 px-4 py-2">Email</th>
@@ -86,6 +87,7 @@ const Sheet = () => {
             <tbody>
               {students.map((student, index) => (
                 <tr key={index}>
+                  <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
                   <td className="border border-gray-300 px-4 py-2">{student.name}</td>
                   <td className="border border-gray-300 px-4 py-2">{student.rollNo}</td>
                   <td className="border border-gray-300 px-4 py-2">{student.email}</td>

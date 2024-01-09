@@ -8,15 +8,17 @@ import { addStudent } from "./operations/attendenceApi";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const {user}=useSelector(state=>state.auth);
-  const email = user.email;
+  const {user}= useSelector(state=>state.auth);
+  const email = JSON.parse(user).email;
+  
+  
   const [classes, setClasses] = useState([]);
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data={email:email,gmail:"email"};
+        const data={email:email};
         const response = await dispatch(showAllClasses(data));
         setClasses(response.data.classes);
         console.log("res",response.data.classes);

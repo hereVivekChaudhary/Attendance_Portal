@@ -16,4 +16,7 @@ export const userendpoints={
     SHOW_SINGLE_CLASS:BASE_URL+'/attendance/studentTable',
     MARK_ATTENDENCE:BASE_URL+'/attendance/submitAttendence',
     UPDATE_ATTENDENCE:BASE_URL+'/attendance/updateAttendence',
+    SHOW_SINGLE_STUDENT_ATTENDENCE:BASE_URL+'/attendance/showSingleStudentAttendence',
+    UPDATE_STUDENT_DETAILS:BASE_URL+'/attendance/updateStudentDetails',
+    SHOW_SINGLE_STUDENT:BASE_URL+'/attendance/singleStudentDetails',
 }

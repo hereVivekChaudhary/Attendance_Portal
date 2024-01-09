@@ -185,7 +185,7 @@ exports.showSingleClass=async(req,res)=>{
    })
 }catch(err){
     console.log("err while fectching single class",err);
-    return res.status.json({
+    return res.status(400).json({
         success:false,
         message:"error while fetching single class"
     });
@@ -225,7 +225,7 @@ attendence.forEach(async(element)=>{
     console.log("dateResponse",dateResponse);
 
 
-    let updateinfo= await studentModel.findOneAndUpdate(
+     await studentModel.findOneAndUpdate(
         { _id: element.id },
         { $push: { attendence: dateResponse._id } },
         { new: true }
@@ -246,41 +246,182 @@ return res.status(200).json({
 // updating attendence
 
 
-exports.updateAttendence=async(req,res)=>{
-    // attendence array
-    const updateAttendence=req.body.updateAttendence;
-    if(!updateAttendence.length)
-    {
-        return res.status(400).json({
-            success:false,
-            message:"all field are required"
-        });
-    }
+// exports.updateAttendence=async(req,res)=>{
+//     // attendence array
+//     const updateAttendence=req.body.updateAttendence;
+//     if(!updateAttendence.length)
+//     {
+//         return res.status(400).json({
+//             success:false,
+//             message:"all field are required"
+//         });
+//     }
 
 
     
-    updateAttendence.forEach(async(element)=>{
-        // element contain data model id and mark it  present or absent
-try{
-//create dataModel
- await dateModel.findOneAndUpdate({_id:element.id},{$set:{attendence:element.mark}});
+//     updateAttendence.forEach(async(element)=>{
+//         // element contain data model id and mark it  present or absent
+// try{
+// //create dataModel
+//  await dateModel.findOneAndUpdate({_id:element.id},{$set:{attendence:element.mark}});
 
 
 
 
-}catch(err){
-    console.log("error while updating attendence ",err);
-return  res.status(400).json({
-    success:false,
-    message:"error while updating attendence",
-})
+// }catch(err){
+//     console.log("error while updating attendence ",err);
+// return  res.status(400).json({
+//     success:false,
+//     message:"error while updating attendence",
+// })
+// }
+//     })
+
+//     return res.status(200).json({
+//         success:true,
+//         message:"attendence updated successfully",
+//     });
+
+// }
+
+
+exports.updateAttendence=async(req,res)=>{
+
+
+    try{
+
+
+        Object.keys(req.body).forEach((element)=>{
+            if(!element)
+            {
+                return res.status(400).json({
+                    success:false,
+                    message:"all field are required"
+                });
+            }   
+        });
+        console.log("req.body",req.body);
+        const data=req.body;
+
+        data.forEach(async(element)=>{
+            console.log(element.id);
+     const update1=await dateModel.findOneAndUpdate(
+            { _id:element.id },
+            { Date: element.Date,  attendence: element.mark },
+            { new: true } 
+          );
+          console.log(update1);
+        }
+        );
+
+        
+        return res.status(200).json({
+            success:true,
+            message:"attendence updated successfully",
+        });
+
+
+    }
+    catch(err){
+        console.log("error while updating attendence ",err);
+    }
 }
-    })
 
-    return res.status(200).json({
-        success:true,
-        message:"attendence updated successfully",
+//give single student attendence
+exports.showSingleStudentAttendence=async(req,res)=>{
+    const studentId=req.body.id;
+    try{
+   const respones = await studentModel.findOne({_id:studentId}).populate({
+    path:"attendence"
+   }).exec();
+   console.log("respones",respones.attendence);
+   return res.status(200).json({
+    success:true,
+    data:respones.attendence,
+   })
+}
+catch(err){
+    console.log("err while fectching single class",err);
+    return res.status.json({
+        success:false,
+        message:"error while fetching single class"
     });
 
 }
+    
+        
+    }
 
+
+//show single student detils
+ exports.showSingleStudent=async(req,res)=>{
+    console.log(req.body);
+    try{
+   Object.values(req.body).forEach((ele)=>{
+    if(!ele){
+        return res.status(400).json({
+            success:false,
+            message:"all field are required",
+        }
+        )
+    }
+   });
+
+   const response=await studentModel.findOne({_id:req.body.id});
+
+   if(response)
+   {
+    return res.status(200).json({
+        success:true,
+        message:"updated successfully",
+        data:response
+    })
+   }else{
+    res.status(400).json({
+        success:false,
+        message:"error while updating student Details"
+    })
+   }
+    }catch(err){
+        res.status(400).json({
+            success:false,
+            message:"error while updating student Details"
+        })
+    }
+ }
+
+// update student details
+
+
+exports.updateStudentDetails=async(req,res)=>{
+    try{
+    Object.values(req.body).forEach((ele)=>{
+if(!ele){
+    return res.status(400).json({
+        success:false,
+        message:"All field are required"
+    });
+}
+    });
+      await studentModel.findOneAndUpdate({
+        _id:req.body.id },{
+            name:req.body.name,email:req.body.email,
+            phone:req.body.phone,rollNo:req.body.rollNo,
+            address:req.body.address,
+        },{new:true});
+
+        return res.status(200).json({
+            success:true,
+            message:"Updated successfully"
+        })
+
+
+    }catch(err){
+
+        console.log(err);
+        return res.status(400).json({
+            success:false,
+            message:"Error while updating details"
+        })
+    }
+};

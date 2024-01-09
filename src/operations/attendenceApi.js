@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { apiConnector } from "./apiConnector";
 import { setLoading } from "../reduxslice/authSlice";
 
-const {CREATE_CLASS,ADD_STUDENT,SHOW_ALL_CLASSES,SHOW_SINGLE_CLASS,MARK_ATTENDENCE,UPDATE_ATTENDENCE}=userendpoints;
+const {CREATE_CLASS,ADD_STUDENT,SHOW_ALL_CLASSES,SHOW_SINGLE_CLASS,MARK_ATTENDENCE,UPDATE_ATTENDENCE,SHOW_SINGLE_STUDENT_ATTENDENCE,UPDATE_STUDENT_DETAILS,SHOW_SINGLE_STUDENT}=userendpoints;
 
 // Create Class
 
@@ -139,23 +139,99 @@ export const markAttendance = (data, navigate) => {
 
 //update attendence
 
-export const updateAttendence = async (data,navigate) => {
+export const updateAttendence =  (data,navigate) => {
     return  async(dispatch)=>{
-        setLoading(true);
+        dispatch(setLoading(true));
+console.log(data);
     const toastId = toast.loading("Updating Attendence");
     try {
         const res = await apiConnector("POST",UPDATE_ATTENDENCE, data);
         if (res.status === 200) {
         toast.success("Attendence Updated Successfully");
-        return res.data;
+        navigate(-1);
         }
     } catch (err) {
-        toast.error("Attendence Update Failed");
+        toast.error("Attendence Update Failed1111");
         return err;
     }
-        setLoading(false);
+    finally{
+        dispatch(setLoading(false));
         toast.dismiss(toastId);
+    }
 }
     };
 
+//show single student attendence
+
+export const showSingleStudentAttendence =  (data) => {
+    return async(dispatch)=>{
+        dispatch(setLoading(true));
+    const toastId = toast.loading("Loading Details");
+    try {
+        const res = await apiConnector("POST",SHOW_SINGLE_STUDENT_ATTENDENCE, data);
+        if (res.status === 200) {
+        toast.success("Details Loading successfully");
+        return res.data;
+        }
+    } catch (err) {
+     toast.error("Details Loading Failed");
+        return err;
+    }
+    finally{
+        dispatch(setLoading(false));
+        toast.dismiss(toastId);
+    }
+      
+}
+    }
+
+
+    // show single student detials
+    export const showSingleStudent=(data)=>{
+  const toastId=toast.loading("loading");
+
+      return async(dispatch)=>{
+        try {
+          console.log("data",data);
+     dispatch(setLoading(true));
+     const response=await apiConnector("POST",SHOW_SINGLE_STUDENT,data);
+  console.log("response",response);
+     if(response.status===200)
+     return response.data;
+    else{
+      toast.error("Error while loading Details");
+    }
+        }catch(err){
+toast.error("Error while loading Details");
+console.log(err);
+        }finally{
+toast.dismiss(toastId);
+dispatch(setLoading(false));
+        }
+      }
+
+    }
+
+    // update student detils
+
+    export const updateStudentDetails=(data,navigate)=>{
+      return async(dispatch)=>{
+        const toastId=toast.loading("updating Detils");
+      try{
+dispatch(setLoading(true));
+
+const response=await apiConnector("POST",UPDATE_STUDENT_DETAILS,data);
+
+if(response.status===200){
+toast.success("updated successfully");
+}
+      }
+      catch(err){
+ toast.error("error while updating");
+ console.log(err);
+      }finally{
+      toast.dismiss(toastId);
+      dispatch(setLoading(true));
+      }};
+    }
     

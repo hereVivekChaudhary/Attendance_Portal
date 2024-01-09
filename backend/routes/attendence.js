@@ -4,7 +4,7 @@ const router=express.Router();
 
 // importing controlleres
 
-const {createClass,addStudent,updateAttendence,showSingleClass,showAllClasses,markAttendence}=require("../controls/attendence");
+const {createClass,addStudent,updateAttendence,showSingleClass,showAllClasses,markAttendence,showSingleStudentAttendence,updateStudentDetails,showSingleStudent}=require("../controls/attendence");
 
 // creating class 
 router.post("/createClass",createClass);
@@ -25,5 +25,16 @@ router.post("/submitAttendence",markAttendence);
 
 //update attendence
 router.post("/updateAttendence",updateAttendence);
+
+//show single student attendence
+router.post("/showSingleStudentAttendence",showSingleStudentAttendence);
+
+//update student details
+
+router.post("/updateStudentDetails",updateStudentDetails);
+
+// giving single student detials
+
+router.post("/singleStudentDetails",showSingleStudent);
 
 module.exports=router;
