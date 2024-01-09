@@ -224,6 +224,7 @@ const response=await apiConnector("POST",UPDATE_STUDENT_DETAILS,data);
 
 if(response.status===200){
 toast.success("updated successfully");
+navigate(-1);
 }
       }
       catch(err){

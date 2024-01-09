@@ -45,7 +45,7 @@ const Attendance = () => {
     const submitData = [];
     for(let [key,value] of Object.entries(data)){
 submitData.push({id:key,Date:indianDate,mark:value?'P':'A'});
-console.log("key "+key+"  "+"value "+value);
+
     }
     console.log("submitData",submitData);
     dispatch(updateAttendence(submitData,navigate));

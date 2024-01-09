@@ -33,24 +33,15 @@ fetch();
 
 
    //******************* */
-   const submitData= async(data)=>{ 
+   const submitData= async(data,navigate)=>{ 
       console.log(data);
       data.id=id;
-     dispatch(updateStudentDetails(data));
+     dispatch(updateStudentDetails(data,navigate));
    
    };
 
    return (
-   
-//     <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
-//     <td className="border border-gray-300 bg-green-500 px-4 py-2">
-//       <Link to={`/Attendence/${student._id}`}>{student.name}</Link>
-//     </td>
-//     <td className="border border-gray-300 px-4 py-2">{student.rollNo}</td>
-//     <td className="border border-gray-300 px-4 py-2">{student.email}</td>
-//     <td className="border border-gray-300 px-4 py-2">{student.phone}</td>
-//     <td className="border border-gray-300 px-4 py-2">{student.address}</td>
-//   </tr>
+
 
 
 
