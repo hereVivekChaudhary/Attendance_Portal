@@ -3,8 +3,9 @@ const otpTemplate = (otp) => {
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Verification Email</title>
+        
         <meta charset="UTF-8">
+        <title>Verification Email</title>
         <style>
             body {
                 background-color: #f1f1f1;
@@ -27,6 +28,6 @@ const otpTemplate = (otp) => {
     </body>
     </html>
     `;
-}
+};
 
 module.exports = otpTemplate;

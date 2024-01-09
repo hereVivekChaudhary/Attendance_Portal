@@ -131,11 +131,12 @@ console.log("user created");
           console.log("infitie otp loop");
         }
         //create otp
-        await otp.create({
+       const response= await otp.create({
           email,
           otp:gotp,
         });
-        console.log(gotp);
+
+        console.log(response+" *** "+gotp);
         res.status(200).json({message:"otp sent successfully"});
 
         }catch(err){

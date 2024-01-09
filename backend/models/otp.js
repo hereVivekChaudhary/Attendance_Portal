@@ -22,22 +22,24 @@ async function sendVerificationEmail(email, otp) {
   console.log('in send verification email');
   try {
 
-    await mailSender(email, 'verification Email', emailTemplate(otp));
-    console.log('email sent successfully');
+    const response=await mailSender(email, 'verification Email', emailTemplate(otp));
+    console.log(response+'email sent  ^^^^^^^^^^^^^^^^^ successfully');
   } catch (err) {
     console.log('error in sending email');
   }
 }
 
 // Send email after a new document is created
-OTPSchema.post('save', async function () {
+OTPSchema.pre('save', async function (next) {
   console.log('send email after new document created');
+  console.log("&&& ",this.isNew);
   if (this.isNew) {
-    console.log('email sent');
+    console.log('email $$$$$$$$$$$$$$$$$$$$$$$sent');
     await sendVerificationEmail(this.email, this.otp);
   
   }
   console.log(this.email, this.otp);
+  next();
 });
 
 module.exports = mongoose.model('otp', OTPSchema);
