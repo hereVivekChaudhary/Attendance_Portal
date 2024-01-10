@@ -11,7 +11,7 @@ const CreateClass = () => {
   const {user}=useSelector(state=>state.auth);
   const { register, handleSubmit ,reset} = useForm();
   
-let email=JSON.parse(user).email;
+let email=user.email;
 // console.log(email);
   const shadowStyle = {
     boxShadow: '18px 18px 87px #16ad28, -18px -18px 86px #1ee936',
@@ -25,8 +25,8 @@ console.log(data); // Log the form data
   };
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-48px)]">
-      <div className="bg-green-500 text-center p-5 rounded-[19px]" style={shadowStyle}>
+    <div className="flex items-center justify-center bg-red-400 h-[calc(100vh-48px)]">
+      <div className="bg-green-500 text-center  rounded-[19px] p-2" style={shadowStyle}>
         <h1 className="text-white">Create Class</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -34,25 +34,25 @@ console.log(data); // Log the form data
             <input
               type="text"
               name="standard"
-              placeholder="12"
+              placeholder="  12"
               className="rounded-md"
               {...register("standard", { required: true })}
             />
           </div>
 
-          <div>
+          <div >
             <p className="text-white">Enter class timing <span className="text-red-700">*</span></p>
-            <div className="flex gap-1">
+            <div className="flex gap-1 flex-col">
               <input
                 type="text"
                 name="startTime"
-                placeholder="start(10)"
+                placeholder="  start(10)"
                 className="rounded-md"
                 {...register("startTime", { required: true })}
               />
               <input
                 type="text"
-                placeholder="end(11)"
+                placeholder="   end(11)"
                 name="endTime"
                 className="rounded-md"
                 {...register("endTime", { required: true })}
@@ -63,13 +63,13 @@ console.log(data); // Log the form data
             <input
               type="text"
               name="subject"
-              placeholder="Maths"
+              placeholder="  Maths"
               className="rounded-md"
               {...register("subject", { required: true })}
             />
           </div>
 
-          <button className="bg-white text-green-500 rounded-md p-1 border border-black" type="submit">
+          <button className="bg-white text-green-500 rounded-md p-1 border border-black mt-1" type="submit">
             Create
           </button>
         </form>

@@ -42,7 +42,7 @@ dispatch(login(data,navigate));
     <div className="h-[calc(100vh-48px)] flex justify-center items-center">
       <div className="flex rounded-xl bg-green-500 p-3 h-[20rem]">
         {/* login */}
-        <div className="w-[50%] bg-pink-500 rounded-l-2xl text-white flex  justify-center items-center ">
+        <div className=" bg-pink-500 rounded-l-2xl text-white flex  justify-center items-center ">
           {formtype === "login" && (
             <div >
               <h1>Login</h1>
@@ -66,9 +66,6 @@ dispatch(login(data,navigate));
                     className={`border-2 border-black ${errors.email ? 'border-red-500' : ''}`}
                     {...register('email', { required: 'Email is required' })}
                   />
-                  {errors.email && (
-                    <p className="text-red-500">{errors.email.message}</p>
-                  )}
                 </div>
                 <div>
                   <input
@@ -79,9 +76,6 @@ dispatch(login(data,navigate));
                     className={`border-2 border-black ${errors.password ? 'border-red-500' : ''}`}
                     {...register('password', { required: 'Password is required' })}
                   />
-                  {errors.password && (
-                    <p className="text-red-500">{errors.password.message}</p>
-                  )}
                 </div>
                 <Link to="/user/signup">
                   <p>Don't have an account? Sign up</p>
@@ -104,7 +98,7 @@ dispatch(login(data,navigate));
           )}
         </div>
         {/* signup */}
-        <div className="w-[50%] bg-red-600 rounded-r-2xl text-white flex justify-center items-center">
+        <div className=" bg-red-600 rounded-r-2xl text-white flex justify-center items-center">
           {!(formtype === "login") && (
             <div>
               <h1 className=" text-center ">Sign up</h1>
@@ -118,9 +112,7 @@ dispatch(login(data,navigate));
                     className={`border-2 border-black w-[50%] ${errors.firstname ? 'border-red-500' : ''}`}
                     {...register('firstname', { required: 'First Name is required' })}
                   />
-                  {errors.firstname && (
-                    <p className="text-red-500">{errors.firstname.message}</p>
-                  )}
+           
                   <input
                     type="text"
                     name="lastname"
@@ -129,9 +121,7 @@ dispatch(login(data,navigate));
                     className={`border-2 border-black w-[50%] ${errors.lastname ? 'border-red-500' : ''}`}
                     {...register('lastname', { required: 'Last Name is required' })}
                   />
-                  {errors.lastname && (
-                    <p className="text-red-500">{errors.lastname.message}</p>
-                  )}
+              
                 </div>
                 <input
                   type="email"
@@ -141,9 +131,7 @@ dispatch(login(data,navigate));
                   className={`border-2 border-black ${errors.email ? 'border-red-500' : ''}`}
                   {...register('email', { required: 'Email is required' })}
                 />
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
+              
                 <input
                   type="password"
                   name="password"
@@ -152,9 +140,7 @@ dispatch(login(data,navigate));
                   className={`border-2 border-black ${errors.password ? 'border-red-500' : ''}`}
                   {...register('password', { required: 'Password is required' })}
                 />
-                {errors.password && (
-                  <p className="text-red-500">{errors.password.message}</p>
-                )}
+             
                      <input
                   type="password"
                   name="confirmPassword"
@@ -163,9 +149,7 @@ dispatch(login(data,navigate));
                   className={`border-2 border-black ${errors.confirmPassword ? 'border-red-500' : ''}`}
                   {...register('confirmPassword', { required: 'Password is required' })}
                 />
-                {errors.confirmPassword && (
-                  <p className="text-red-500">{errors.confirmPassword.message}</p>
-                )}
+             
                 <Link to="/user/login">
                   <p>Already have an account? Login</p>
                 </Link>
