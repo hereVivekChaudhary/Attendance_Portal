@@ -66,7 +66,7 @@ export const showAllClasses =  (data) => {
     const res = await apiConnector("POST",SHOW_ALL_CLASSES,data);
     console.log(res);
     if (res.status === 200) {
-      console.log("res.data",res);
+      console.log("res.data****  ",res.data.data.classes);
       toast.dismiss(toastId);
     dispatch(setLoading(false));
       return res.data;
