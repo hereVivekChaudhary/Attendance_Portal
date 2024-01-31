@@ -147,7 +147,7 @@ exports.showAllClasses=async(req,res)=>{
 
     //teacher email
     const email= req.body.email;
-    console.log("body",req.body);
+    console.log("body",req.param('email'));
 console.log("email",email);
     if(!email){
         

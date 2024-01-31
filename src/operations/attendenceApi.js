@@ -62,7 +62,7 @@ export const showAllClasses =  (data) => {
     dispatch(setLoading(true));
     const toastId = toast.loading("Showing Classes");
   try {
-    const res = await apiConnector("POST",SHOW_ALL_CLASSES,data);
+    const res = await apiConnector("GET",SHOW_ALL_CLASSES,data);
     if (res.status === 200) {
       console.log("res.data",res);
       toast.dismiss(toastId);

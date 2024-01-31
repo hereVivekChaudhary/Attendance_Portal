@@ -8,12 +8,13 @@ const Navbar = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const isLogin=useSelector((state)=>state.auth.user);
-
+    
+console.log("isLogin",isLogin);
 function handleLogout() {
          dispatch(Logout(navigate));
       }
     return(
-        <div className="  h-12 bg-green-400  ">
+        <div className="  h-12 bg-black  ">
 <div className=" flex justify-between">
     {/* logo */}
     <div className="pl-1">
