@@ -8,8 +8,8 @@ const Navbar = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const isLogin=useSelector((state)=>state.auth.user);
-    const email=JSON.parse(isLogin).email;
-console.log("navbar" , email);
+    const firstname=JSON.parse(isLogin).firstname;
+console.log("navbar" , firstname);
 function handleLogout() {
          dispatch(Logout(navigate));
       }
@@ -43,7 +43,7 @@ function handleLogout() {
 
     {isLogin && <div className="flex gap-2">
 
-        <div> {email} </div>
+        <div className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"> {firstname} </div>
         <button className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" onClick={handleLogout}>
     Logout
     </button>
