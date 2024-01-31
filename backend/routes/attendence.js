@@ -13,8 +13,8 @@ router.post("/createClass",createClass);
 router.post("/addStudent",addStudent);
 
 // show all the class
-// router.post("/showAllClasses",showAllClasses);
-router.get("/showAllClasses",showAllClasses);
+router.post("/showAllClasses",showAllClasses);
+// router.get("/showAllClasses",showAllClasses);
 
 
 // show attendence table

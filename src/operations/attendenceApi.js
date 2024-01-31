@@ -35,7 +35,7 @@ return  async(dispatch)=>{
 //add student 
 
 export const addStudent =  (data,navigate) => {
-  console.log("data add",data);
+  // console.log("data add",data);
     return async(dispatch)=>{
     dispatch(setLoading(true));
     const toastId = toast.loading("Adding Student");
@@ -62,7 +62,9 @@ export const showAllClasses =  (data) => {
     dispatch(setLoading(true));
     const toastId = toast.loading("Showing Classes");
   try {
-    const res = await apiConnector("GET",SHOW_ALL_CLASSES,data);
+    console.log("dfd",data);
+    const res = await apiConnector("POST",SHOW_ALL_CLASSES,data);
+    console.log(res);
     if (res.status === 200) {
       console.log("res.data",res);
       toast.dismiss(toastId);

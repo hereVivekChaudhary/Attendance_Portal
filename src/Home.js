@@ -11,7 +11,7 @@ const Home = () => {
   // const {user}= useSelector(state=>state.auth);
   
   const email = JSON.parse(localStorage.getItem('user')).email;
-  console.log(email);
+  // console.log("emailssss",email);
   
   
   const [classes, setClasses] = useState([]);
@@ -21,6 +21,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const data={email:email};
+        console.log(data);
         const response = await dispatch(showAllClasses(data));
         setClasses(response.data.classes);
         console.log("res",response.data.classes);

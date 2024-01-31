@@ -11,8 +11,8 @@ const CreateClass = () => {
   const {user}=useSelector(state=>state.auth);
   const { register, handleSubmit ,reset} = useForm();
   
-let email=user.email;
-// console.log(email);
+let email=JSON.parse(user).email;
+console.log(email);
   const shadowStyle = {
     boxShadow: '18px 18px 87px #16ad28, -18px -18px 86px #1ee936',
   };
