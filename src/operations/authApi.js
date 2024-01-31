@@ -64,7 +64,7 @@ export function login(data,navigate){
             
             dispatch(setLoading(true));
             const response=await apiConnector("POST",LOGIN,data);
-            if(response.status===200){
+            if(response.data.success){
                 dispatch(setToken(response.data.token));
                 dispatch(setUser(response.data.result));
                 localStorage.setItem("token", JSON.stringify(response.data.token))
@@ -72,12 +72,13 @@ export function login(data,navigate){
                 toast.success("Login successful");
                 navigate('/');
             }
-           
-                
+            else{
+                toast.error("Something went wrong");
+            }
           
         }catch(error){
-            // toast.error("Something went wrong");
-            console.log("login *   ",error);
+            toast.error("Something went wrong");
+            console.log(error);
         }
         finally{
             dispatch(setLoading(false));

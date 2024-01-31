@@ -69,7 +69,7 @@ console.log("user created");
         try{
             Object.entries(req.body).forEach(([key, value]) => {
                 if (!value) {
-                  return res.status(400).json({ error: `${key} is required` });
+                  return res.status(400).json({success:false, error: `${key} is required` });
                 }
               });
               //find user
@@ -77,7 +77,7 @@ console.log("user created");
                 const user = await teacher.findOne({ email });
            
                 if (!user) {
-                  return res.status(400).json({ error: "Invalid Credentials" });
+                  return res.status(400).json({ success:false,error: "Invalid Credentials" });
                 }
                 //check password
                 const isPasswordCorrect = await bycrypt.compare(password, user.password);
@@ -97,17 +97,19 @@ console.log("user created");
           
                 
                
-                    return res.cookie('jwt',token,cookieOptions).status(200).json({result:user,token:token});
+                    return res.cookie('jwt',token,cookieOptions).status(200).json({success:true,result:user,token:token});
                   
             }
                 else
                 {
-                    return res.status(400).json({ error: "Invalid Credentials" });
+                    return res.status(400).json({ success:false,error: "Invalid Credentials" });
                 }
                  
         }
         catch(err){
-            return res.status(500).json({ error: err.message,message:"error in login" });
+            return res.status(500).json({ 
+              success:false,
+              error: err.message,message:"error in login" });
         }
     }
 
