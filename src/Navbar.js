@@ -14,7 +14,7 @@ function handleLogout() {
          dispatch(Logout(navigate));
       }
     return(
-        <div className="  h-12 bg-green-400  ">
+        <div className="  h-12 bg-purple-600  ">
 <div className=" flex justify-between">
     {/* logo */}
     <div className="pl-1">
