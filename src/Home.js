@@ -10,7 +10,9 @@ const Home = () => {
   const dispatch = useDispatch();
 
   
-  const email = useSelector((state)=>(state.auth.user)).email;
+  const user= useSelector((state)=>(state.auth.user));
+const email=user.email;
+  console.log(user ," eeeeeeeeeeeeeeee ",email)
 
   
   
