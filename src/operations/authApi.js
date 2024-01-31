@@ -73,7 +73,7 @@ export function login(data,navigate){
                 navigate('/');
             }
            
-                toast.error("Something went wrong");
+                
           
         }catch(error){
             toast.error("Something went wrong");
