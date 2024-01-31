@@ -10,7 +10,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   
-  const email = JSON.parse(localStorage.getItem('user')).email;
+  const email = useSelector((state)=>(state.auth.user)).email;
 
   
   
@@ -34,7 +34,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className=' bg-black'>
+    <div className=' bg-black h-[calc(100vh-48px)] '>
       <div className="flex flex-row flex-wrap">
         {classes.map((element, key) => (
           <Link to={`/Menu/${element._id}`} key={key}>
