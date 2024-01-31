@@ -7,8 +7,9 @@ import { Logout } from "./operations/authApi"
 const Navbar = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
-    const isLogin=useSelector((state)=>state.auth.user.email);
-console.log("navbar" , isLogin);
+    const isLogin=useSelector((state)=>state.auth.user);
+    const email=JSON.parse(isLogin).email;
+console.log("navbar" , email);
 function handleLogout() {
          dispatch(Logout(navigate));
       }
@@ -42,7 +43,7 @@ function handleLogout() {
 
     {isLogin && <div className="flex gap-2">
 
-        <div> {isLogin} </div>
+        <div> {email} </div>
         <button className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded" onClick={handleLogout}>
     Logout
     </button>
