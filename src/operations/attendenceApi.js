@@ -73,6 +73,7 @@ export const showAllClasses =  (data) => {
     }
   } catch (err) {
     toast.dismiss(toastId);
+    console.log("error****   ", err);
     return err;
   }
 
