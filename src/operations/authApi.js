@@ -72,12 +72,10 @@ export function login(data,navigate){
                 toast.success("Login successful");
                 navigate('/');
             }
-            else{
-                toast.error(" else Something went wrong");
-            }
+          
           
         }catch(error){
-            // toast.error(" error Something went wrong");
+            toast.error(" error while login");
             console.log(error);
         }
         finally{
