@@ -12,7 +12,6 @@ const Home = () => {
   
   const user= useSelector((state)=>(state.auth.user));
 const email=user.email;
-  console.log(user ," eeeeeeeeeeeeeeee ",email)
 
   
   
