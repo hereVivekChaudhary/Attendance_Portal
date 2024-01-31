@@ -76,8 +76,8 @@ export function login(data,navigate){
                 
           
         }catch(error){
-            toast.error("Something went wrong");
-            console.log(error);
+            // toast.error("Something went wrong");
+            console.log("login *   ",error);
         }
         finally{
             dispatch(setLoading(false));
