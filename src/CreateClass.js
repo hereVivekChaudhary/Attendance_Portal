@@ -13,9 +13,9 @@ const CreateClass = () => {
   
 let email=JSON.parse(user).email;
 console.log(email);
-  const shadowStyle = {
-    boxShadow: '18px 18px 87px #16ad28, -18px -18px 86px #1ee936',
-  };
+  // const shadowStyle = {
+  //   boxShadow: '9px 9px 9px #16ad28, -9px -9px 9px #1ee936',
+  // };
 
   const onSubmit = (data) => {
 data={...data,email:email};
@@ -25,8 +25,8 @@ console.log(data); // Log the form data
   };
 
   return (
-    <div className="flex items-center justify-center bg-red-400 h-[calc(100vh-48px)]">
-      <div className="bg-green-500 text-center  rounded-[19px] p-2" style={shadowStyle}>
+    <div className="flex items-center justify-center h-[calc(100vh-48px)]">
+      <div className=" text-center  rounded-[19px] p-2  bg-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg" >
         <h1 className="text-white">Create Class</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
