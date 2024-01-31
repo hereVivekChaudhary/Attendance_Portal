@@ -72,15 +72,18 @@ export function login(data,navigate){
                 toast.success("Login successful");
                 navigate('/');
             }
-            else{
+           
                 toast.error("Something went wrong");
-            }
           
         }catch(error){
+            toast.error("Something went wrong");
             console.log(error);
         }
-        dispatch(setLoading(false));
-        toast.dismiss(toastId);
+        finally{
+            dispatch(setLoading(false));
+            toast.dismiss(toastId);
+        }
+       
     }
     
 
