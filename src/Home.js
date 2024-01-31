@@ -35,7 +35,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="h-[calc(100vh-48px)] bg-black">
       <div className="flex flex-row flex-wrap">
         {classes.map((element, key) => (
           <Link to={`/Menu/${element._id}`} key={key}>
