@@ -8,7 +8,7 @@ const Navbar = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const isLogin=useSelector((state)=>state.auth.user);
-    const firstname=JSON.parse(isLogin)?.firstname;
+    const firstname=isLogin?.firstname;
 console.log("navbar" , firstname);
 function handleLogout() {
          dispatch(Logout(navigate));
