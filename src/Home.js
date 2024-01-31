@@ -8,10 +8,10 @@ import { addStudent } from "./operations/attendenceApi";
 
 const Home = () => {
   const dispatch = useDispatch();
-  // const {user}= useSelector(state=>state.auth);
+
   
   const email = JSON.parse(localStorage.getItem('user')).email;
-  // console.log("emailssss",email);
+
   
   
   const [classes, setClasses] = useState([]);
@@ -22,7 +22,7 @@ const Home = () => {
       try {
         const data={email:email};
         console.log(data);
-        const response = await dispatch(showAllClasses(data));
+        const response =  dispatch(showAllClasses(data));
         setClasses(response.data.classes);
         console.log("res",response.data.classes);
       } catch (error) {
@@ -34,7 +34,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className=' bg-black'>
       <div className="flex flex-row flex-wrap">
         {classes.map((element, key) => (
           <Link to={`/Menu/${element._id}`} key={key}>

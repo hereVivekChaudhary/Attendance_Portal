@@ -28,7 +28,7 @@ dispatch(login(data,navigate));
   const onSubmitSignUp = (data) => {
     console.log("Sign-up-data:", data);
     if(data.password!==data.confirmPassword ){
-        toast.error("Password  match");
+        toast.error("Password not  match");
         return;
     }
     

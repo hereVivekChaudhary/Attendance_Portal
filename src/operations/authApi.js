@@ -18,7 +18,7 @@ export function sendOtp(email,navigate){
                 navigate('/verify-otp');
             }
             else{
-                toast.error("Something went wrong");
+                toast.error("failed to send otp");
             }
             dispatch(setLoading(false));
             toast.dismiss(toastId);
@@ -44,7 +44,7 @@ export function signup(data,navigate){
                 navigate('/user/login');
             }
             else{
-                toast.error("Something went wrong");
+                toast.error(" Signup  failed");
             }
 
         }catch(error){
@@ -73,11 +73,11 @@ export function login(data,navigate){
                 navigate('/');
             }
             else{
-                toast.error(" else Something went wrong");
+                // toast.error(" else Something went wrong");
             }
           
         }catch(error){
-            toast.error(" error Something went wrong");
+            // toast.error(" error Something went wrong");
             console.log(error);
         }
         finally{
@@ -120,7 +120,7 @@ export function Logout(navigate) {
             toast.success("Password reset link sent successfully");
         }
         else{
-            toast.error("Something went wrong");
+            toast.error("error while sending link");
         }}
         catch(error){
             console.log(error);
@@ -143,7 +143,7 @@ export function Logout(navigate) {
                 toast.success("Password reset successfully");
             }
             else{
-                toast.error("Something went wrong");
+                toast.error("error while reset password");
             }
             navigate('/user/login');
         }catch(error){
@@ -163,7 +163,7 @@ export function changePassword(data){
                 toast.success("Password changed successfully");
             }
             else{
-                toast.error("Something went wrong");
+                toast.error("error while changing password");
             }
 
         }catch(error){
