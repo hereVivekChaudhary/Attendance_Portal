@@ -8,7 +8,7 @@ const Navbar = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const isLogin=useSelector((state)=>state.auth.user);
-console.log("isLogin",isLogin);
+
 function handleLogout() {
          dispatch(Logout(navigate));
       }
