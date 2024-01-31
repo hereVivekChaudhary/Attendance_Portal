@@ -8,11 +8,11 @@ import { addStudent } from "./operations/attendenceApi";
 
 const Home = () => {
   const dispatch = useDispatch();
-
+  const user= useSelector(state=>state.auth.user);
+  const email=user.email;
   
-  const user= useSelector((state)=>(state.auth.user));
-const email=user.email;
-
+  ;
+  // console.log("emailssss",email);
   
   
   const [classes, setClasses] = useState([]);
@@ -22,14 +22,12 @@ const email=user.email;
     const fetchData = async () => {
       try {
         const data={email:email};
-        console.log("data******** ",data);
-        const response =  dispatch(showAllClasses(data));
-        console.log("res ******",response.data.classes);
+        console.log(data);
+        const response = await dispatch(showAllClasses(data));
         setClasses(response.data.classes);
-       
+        console.log("res",response.data.classes);
       } catch (error) {
-      
-        toast.error('Error while fetching classes');
+        toast.error('Can not load  classes');
       }
     };
 
@@ -37,7 +35,7 @@ const email=user.email;
   }, []);
 
   return (
-    <div className=' bg-black h-[calc(100vh-48px)] '>
+    <div>
       <div className="flex flex-row flex-wrap">
         {classes.map((element, key) => (
           <Link to={`/Menu/${element._id}`} key={key}>
