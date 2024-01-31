@@ -22,12 +22,13 @@ const email=user.email;
     const fetchData = async () => {
       try {
         const data={email:email};
-        console.log(data);
+        console.log("data******** ",data);
         const response =  dispatch(showAllClasses(data));
         console.log("res ******",response.data.classes);
         setClasses(response.data.classes);
        
       } catch (error) {
+      
         toast.error('Error while fetching classes');
       }
     };
