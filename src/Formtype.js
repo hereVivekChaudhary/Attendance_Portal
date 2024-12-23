@@ -39,7 +39,7 @@ dispatch(login(data,navigate));
 
 
   return (
-    <div className="h-[calc(100vh-48px)] flex justify-center items-center">
+    <div className="h-[calc(100vh-48px)] flex justify-center items-center mx-4">
       <div className="flex rounded-xl bg-green-500 p-3 h-[20rem]">
         {/* login */}
         <div className=" bg-pink-500 rounded-l-2xl text-white flex  justify-center items-center ">

@@ -16,8 +16,9 @@ return  async(dispatch)=>{
     const res = await apiConnector("POST",CREATE_CLASS, data);
     if (res.status === 200) {
       toast.success("Class Created Successfully");
-      console.log("res.data",res.data);
-      navigate(`/AddStudent/${res.data._id}`)
+  
+      
+      navigate(`/AddStudent/${res.data.data._id}`)
     }
     
   } catch (err) {

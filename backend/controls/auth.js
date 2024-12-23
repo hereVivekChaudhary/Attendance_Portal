@@ -44,7 +44,7 @@ exports.signup = async (req, res) => {
     }
    
     // Hash the password
-    const hashedPassword = await bycrypt.hash(password, 12);
+    const hashedPassword = await bycrypt.hash(password, 12); 
 
     // create the user
    
